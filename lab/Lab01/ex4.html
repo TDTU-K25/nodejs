@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div class="container mt-3">
+      <h3 class="mb-3">Danh sách sinh viên</h3>
+      <div class="row mb-3">
+        <div class="col-6">
+          <label class="form-label">Họ và tên</label>
+          <input
+            type="text"
+            placeholder="Nhập tên"
+            id="nameInput"
+            class="form-control"
+          />
+        </div>
+        <div class="col-6">
+          <label class="form-label">Tuổi</label>
+          <input
+            type="age"
+            placeholder="Nhập tuổi"
+            id="ageInput"
+            class="form-control"
+          />
+        </div>
+      </div>
+      <p>
+        Chọn một trong hai button, sau đó dữ liệu sẽ được thêm vào một trong hai
+        bảng tương ứng. Ngoài ra, dữ liệu cũng được lưu vào một trong hai loại
+        storage tương ứng.
+      </p>
+      <button class="btn btn-primary" id="btn-save-local-storage">
+        Thêm local storage
+      </button>
+      <button class="btn btn-danger" id="btn-save-session-storage">
+        Thêm Session storage
+      </button>
+
+      <div class="row mt-5">
+        <div class="col">
+          <h4 class="text-primary">Local Storage</h4>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>STT</th>
+                <th>Tên</th>
+                <th>Tuổi</th>
+              </tr>
+            </thead>
+            <tbody id="students-local-storage"></tbody>
+          </table>
+        </div>
+        <div class="col">
+          <h4 class="text-danger">Session Storage</h4>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>STT</th>
+                <th>Tên</th>
+                <th>Tuổi</th>
+              </tr>
+            </thead>
+            <tbody id="students-session-storage"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <script>
+      const renderStudents = (students, storageType) => {
+        const studentsHTML = students.map((student) => {
+          student = JSON.parse(student);
+          return `<tr>
+                <td>${student.id}</td>
+                <td>${student.name}</td>
+                <td>${student.age}</td>
+              </tr>`;
+        });
+        const html = studentsHTML.join("");
+        if (storageType === "local-storage") {
+          document.getElementById("students-local-storage").innerHTML = html;
+        } else if (storageType === "session-storage") {
+          document.getElementById("students-session-storage").innerHTML = html;
+        }
+      };
+
+      document.addEventListener("DOMContentLoaded", (evt) => {
+        let studentsLocalStorage = [];
+        if (localStorage.getItem("students")) {
+          studentsLocalStorage = JSON.parse(localStorage.getItem("students"));
+        }
+        renderStudents(studentsLocalStorage, "local-storage");
+
+        let studentsSessionStorage = [];
+        if (sessionStorage.getItem("students")) {
+          studentsSessionStorage = JSON.parse(
+            sessionStorage.getItem("students")
+          );
+        }
+        renderStudents(studentsSessionStorage, "session-storage");
+      });
+
+      const addStudent = (students) => {
+        let name = document.getElementById("nameInput").value;
+        let age = document.getElementById("ageInput").value;
+
+        let student = {
+          id: students.length + 1,
+          name,
+          age,
+        };
+
+        students.push(JSON.stringify(student));
+
+        // clear input after add successfully
+        document.getElementById("nameInput").value = "";
+        document.getElementById("ageInput").value = "";
+      };
+
+      // local storage
+      document
+        .getElementById("btn-save-local-storage")
+        .addEventListener("click", (evt) => {
+          let students = [];
+          if (localStorage.getItem("students")) {
+            students = JSON.parse(localStorage.getItem("students"));
+          }
+          addStudent(students);
+          localStorage.setItem("students", JSON.stringify(students));
+          renderStudents(students, "local-storage");
+        });
+
+      // session storage
+      document
+        .getElementById("btn-save-session-storage")
+        .addEventListener("click", (evt) => {
+          let students = [];
+          if (sessionStorage.getItem("students")) {
+            students = JSON.parse(sessionStorage.getItem("students"));
+          }
+          addStudent(students);
+          sessionStorage.setItem("students", JSON.stringify(students));
+          renderStudents(students, "session-storage");
+        });
+    </script>
+  </body>
+</html>
