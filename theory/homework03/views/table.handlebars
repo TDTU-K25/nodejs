@@ -1,0 +1,20 @@
+<div class="container mt-3">
+  <div>
+    <h3 class="text-center">Create table using function helper</h3>
+    {{{table 3 5}}}
+  </div>
+  <div class="mt-5">
+    <h3 class="text-center">Create table using block helper</h3>
+    <table class="table table-striped">
+      {{#for 1 3}}
+        <tr>
+          {{#for 1 5}}
+            <td>
+            {{../value}},{{value}}
+            </td>
+          {{/for}}
+        </tr>
+      {{/for}}
+    </table>
+  </div>
+</div>

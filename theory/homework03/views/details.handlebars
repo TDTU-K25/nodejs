@@ -1,0 +1,47 @@
+{{#with product}}
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-7 text-center">
+        <img src="{{images.[0]}}" alt="" style="width: 50%" />
+        <div class="row">
+          {{#each images}}
+            <div class="col-4 mt-4">
+              <img src="{{this}}" alt="" style="width: 60%;" />
+            </div>
+          {{/each}}
+        </div>
+      </div>
+      <div class="col-5">
+        <p style="font-size: 1.25rem; line-height: 1.5rem;">{{name}}</p>
+        <p
+          style="font-size: 1.875rem;
+    font-weight: 500;
+    color: #ee4d2d"
+        >{{currency price}}</p>
+      </div>
+    </div>
+    <div class="row mt-5">
+      <div class="col-4">
+        {{desc}}
+      </div>
+      <div class="col-8">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Tên</th>
+              <th>Giá</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each vars}}
+              <tr>
+                <td>{{name}}</td>
+                <td>{{currency price}}</td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+{{/with}}

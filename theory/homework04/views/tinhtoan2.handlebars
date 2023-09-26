@@ -1,0 +1,57 @@
+<form id="myForm">
+  <div>
+    <label for="">a:</label>
+    <input type="number" step="any" id="a" />
+  </div>
+  <div>
+    <label for="">b:</label>
+    <input type="number" step="any" id="b" />
+  </div>
+  <div>
+    <span>op:</span>
+    <label for="">
+      <input type="radio" name="op" class="op" value="+" />
+      +
+    </label>
+    <label for="">
+      <input type="radio" name="op" class="op" value="-" />
+      -
+    </label>
+    <label for="">
+      <input type="radio" name="op" class="op" value="x" />
+      x
+    </label>
+    <label for="">
+      <input type="radio" name="op" class="op" value="/" />
+      /
+    </label>
+  </div>
+  <div>
+    <button>Tính</button>
+  </div>
+  <div id="result"></div>
+</form>
+
+<script
+  src="https://code.jquery.com/jquery-3.7.1.min.js"
+  integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+  crossorigin="anonymous"
+></script>
+<script>
+  $("#myForm").on("submit", (evt) => {
+    evt.preventDefault();
+    const body = JSON.stringify({
+      a: $("#a").val(),
+      b: $("#b").val(),
+      op: $(".op:checked").val()
+    })
+    const headers = {
+      'Content-type': "application/json"
+    }
+    fetch("/tinhtoan2", {method: "post", body, headers})
+    .then(resp => resp.json())
+    .then(json => {
+      document.getElementById("result").innerHTML = `Kết quả: ${json.result}`
+    })
+  })
+</script>

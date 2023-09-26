@@ -1,0 +1,17 @@
+{
+  "version": "1.0.0",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "main": "app.js",
+  "license": "MIT",
+  "dependencies": {
+    "blueimp-file-upload": "^10.32.0",
+    "express": "^4.18.2",
+    "express-handlebars": "^7.1.2",
+    "multiparty": "^4.2.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}

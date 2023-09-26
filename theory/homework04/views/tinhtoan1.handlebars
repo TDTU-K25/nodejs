@@ -1,0 +1,35 @@
+<form method="post">
+  <div>
+    <label for="">a:</label>
+    <input type="number" step="any" name="a" value="{{a}}" />
+  </div>
+  <div>
+    <label for="">b:</label>
+    <input type="number" step="any" name="b" value="{{b}}" />
+  </div>
+  <div>
+    <span>op:</span>
+    <label for="">
+      <input type="radio" name="op" {{#ifeq '+' op }} checked {{/ifeq}} id="" value="+" />
+      +
+    </label>
+    <label for="">
+      <input type="radio" name="op" {{#ifeq '-' op }} checked {{/ifeq}} id="" value="-" />
+      -
+    </label>
+    <label for="">
+      <input type="radio" name="op" {{#ifeq 'x' op }} checked {{/ifeq}} id="" value="x" />
+      x
+    </label>
+    <label for="">
+      <input type="radio" name="op" {{#ifeq '/' op }} checked {{/ifeq}} id="" value="/" />
+      /
+    </label>
+  </div>
+  <div>
+    <button>Tính</button>
+  </div>
+  {{#if result}}
+    <div>Kết quả: {{result}}</div>
+  {{/if}}
+</form>
