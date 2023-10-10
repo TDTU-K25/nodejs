@@ -1,0 +1,39 @@
+<div class="container mt-3">
+  <h3>Đăng nhập</h3>
+  <form action="/login" method="post">
+    <div class="mb-3">
+      <label for="" class="form-label">Email:</label>
+      <input
+        type="email"
+        name="email"
+        id=""
+        class="form-control"
+        placeholder="Nhập email"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="" class="form-label">Mật khẩu:</label>
+      <input
+        type="password"
+        name="pwd"
+        id=""
+        class="form-control"
+        placeholder="Nhập password"
+      />
+    </div>
+    {{#if flash}}
+    <div class="alert alert-{{flash.type}} alert-dismissible fade show" role="alert">
+      {{flash.message}}
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="alert"
+        aria-label="Close"
+      ></button>
+    </div>
+    {{/if}}
+    <div class="mb-3">
+      <button class="btn btn-success">Đăng nhập</button>
+    </div>
+  </form>
+</div>

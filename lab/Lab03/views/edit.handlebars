@@ -1,0 +1,53 @@
+<div class="container mt-3">
+  <div class="card p-3">
+    <a href="/" class="text-decoration-none text-primary">Quay lại</a>
+    <h3 class="my-3 text-success">Sửa sản phẩm</h3>
+    {{#with product}}
+      <form action="/edit/{{id}}" method="post" enctype="multipart/form-data">
+        <div class="mb-3">
+          <label for="" class="form-label">Tên sản phẩm</label>
+          <input
+            value="{{name}}"
+            type="text"
+            name="name"
+            id=""
+            placeholder="Nhập tên sản phẩm"
+            class="form-control"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="" class="form-label">Giá sản phẩm</label>
+          <input
+            value="{{price}}"
+            type="text"
+            name="price"
+            id=""
+            placeholder="Nhập giá bán"
+            class="form-control"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="" class="form-label">Ảnh hiện tại</label>
+          <img style="max-width:10%;" src="/{{img}}" alt="" />
+        </div>
+        <div class="mb-3">
+          <label for="" class="form-label">Ảnh sản phẩm</label>
+          <input type="file" name="img" id="" class="form-control" />
+        </div>
+        <div class="mb-3">
+          <label for="" class="form-label">Mô tả</label>
+          <textarea
+            name="description"
+            id=""
+            cols="30"
+            rows="10"
+            class="form-control"
+          >{{description}}</textarea>
+        </div>
+        <div>
+          <button class="btn btn-success">Sửa sản phẩm</button>
+        </div>
+      </form>
+    {{/with}}
+  </div>
+</div>

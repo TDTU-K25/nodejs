@@ -1,0 +1,112 @@
+<div class="container mt-3">
+  <h3 class="mb-3 text-primary">Danh sách sản phẩm</h3>
+  <a href="/add" class="btn btn-success mb-2">Thêm sản phẩm</a>
+  <p>Chọn một sản phẩm cụ thể để xem chi tiết</p>
+  {{#if flash}}
+    <div
+      class="alert alert-{{flash.type}} alert-dismissible fade show"
+      role="alert"
+    >
+      {{flash.message}}
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="alert"
+        aria-label="Close"
+      ></button>
+    </div>
+  {{/if}}
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>STT</th>
+        <th>Tên sản phẩm</th>
+        <th>Giá</th>
+        <th>Thao tác</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each products}}
+        <tr>
+          <td>{{this.id}}</td>
+          <td>
+            <a href="/{{id}}">{{this.name}}</a>
+          </td>
+          <td>{{getCurrency this.price}}</td>
+          <td>
+            <a class="text-decoration-none" href="/edit/{{this.id}}">Chỉnh sửa</a>
+            |
+            <a
+              href=""
+              onclick="showDeleteModal(this)"
+              class="text-decoration-none"
+              data-product-id="{{this.id}}"
+              data-product-name="{{this.name}}"
+              data-bs-toggle="modal"
+              data-bs-target="#staticBackdrop"
+            >Xóa</a>
+          </td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+  <!-- Modal -->
+  <div
+    class="modal fade"
+    id="staticBackdrop"
+    data-bs-backdrop="static"
+    data-bs-keyboard="false"
+    tabindex="-1"
+    aria-labelledby="staticBackdropLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">Xóa sản phẩm</h1>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          Bạn có chắc muốn xóa sản phẩm
+        </div>
+        <div class="modal-footer">
+          <button
+            id="btn-confirm"
+            type="button"
+            class="btn btn-danger"
+          >Xóa</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  
+  const buttonConfirm = document.getElementById("btn-confirm");
+  const showDeleteModal = (btn) => { 
+    const modal = document.getElementById("staticBackdrop")
+    document.getElementsByClassName("modal-body")[0].innerHTML = `Bạn có chắc muốn xóa sản phẩm <b>${btn.dataset.productName}</b>`;
+    buttonConfirm.setAttribute("data-product-id", btn.dataset.productId);
+  }
+  buttonConfirm.addEventListener("click", (evt) => { 
+    fetch("http://localhost:8000/delete", {
+      method: "post",
+      body: JSON.stringify({
+        id: evt.target.dataset.productId
+      }), headers: {
+        "Content-type": "application/json"
+      }
+    }).then(res => res.json())
+    .then(json => {
+      if (json.status === "success") {
+        location.reload()
+      }
+    })
+  })
+</script>

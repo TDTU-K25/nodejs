@@ -1,0 +1,59 @@
+<div class="container mt-3">
+  <div class="card p-3">
+    <a href="/" class="text-decoration-none text-primary">Quay lại</a>
+    <h3 class="my-3 text-success">Thêm sản phẩm mới</h3>
+    <form action="/add" method="post" enctype="multipart/form-data">
+      <div class="mb-3">
+        <label for="" class="form-label">Tên sản phẩm</label>
+        <input
+          type="text"
+          name="name"
+          id=""
+          placeholder="Nhập tên sản phẩm"
+          class="form-control"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="" class="form-label">Giá sản phẩm</label>
+        <input
+          type="number"
+          name="price"
+          id=""
+          placeholder="Nhập giá bán"
+          class="form-control"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="" class="form-label">Ảnh sản phẩm</label>
+        <input type="file" name="img" id="" class="form-control" />
+      </div>
+      <div class="mb-3">
+        <label for="" class="form-label">Mô tả</label>
+        <textarea
+          name="description"
+          id=""
+          cols="30"
+          rows="10"
+          class="form-control"
+        ></textarea>
+      </div>
+      {{#if flash}}
+        <div
+          class="alert alert-{{flash.type}} alert-dismissible fade show"
+          role="alert"
+        >
+          {{flash.message}}
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+          ></button>
+        </div>
+      {{/if}}
+      <div>
+        <button class="btn btn-success">Thêm sản phẩm</button>
+      </div>
+    </form>
+  </div>
+</div>
