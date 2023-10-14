@@ -1,0 +1,30 @@
+<div class="container mt-3">
+  <div class="card p-3">
+    <a href="/users" class="text-decoration-none text-primary">Quay lại</a>
+    <h3 class="my-3 text-success">Chi tiết user</h3>
+    {{#with user}}
+    <form>
+      <div class="mb-3">
+        <label for="" class="form-label fw-bold">ID:</label>
+        <span>{{id}}</span>
+      </div>
+      <div class="mb-3">
+        <label for="" class="form-label fw-bold">Name:</label>
+        <span>{{name}}</span>
+      </div>
+      <div class="mb-3">
+        <label for="" class="form-label fw-bold">Email:</label>
+        <span>{{email}}</span>
+      </div>
+      <div class="mb-3">
+        <label for="" class="form-label fw-bold">Gender:</label>
+        <span>{{gender}}</span>
+      </div>
+      <div class="mb-3">
+        <label for="" class="form-label fw-bold">Status:</label>
+        <span>{{status}}</span>
+      </div>
+    </form>
+    {{/with}}
+  </div>
+</div>
