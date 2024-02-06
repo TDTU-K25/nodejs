@@ -1,0 +1,135 @@
+<div class="row" style="height: 100%; width: 100%;">
+  <div class="col-3 sidebar-conversation">
+    <div class="contact-search">
+      <button class="btn btn-secondary" id="btn-logout" style="position: stick; bottom: 0;">Logout</button>
+
+      <input type="search" class="form-control-sm" style="border: none; border-radius: 4px; padding: 4px;"
+        placeholder="Tìm kiếm">
+      <i class="fa-solid fa-user-plus" data-bs-toggle="modal" data-bs-target="#addContactOne">
+      </i>
+      <i class="fa-solid fa-users-line" data-bs-toggle="modal" data-bs-target="#addContactGroup"></i>
+    </div>
+
+    <div class="contact-container " style="position: relative;">
+    </div>
+
+
+  </div>
+
+  <div class="chat col-9" style="display: none;">
+    <div class="contact bar" style="position: relative;">
+      <div id="avatar" class="pic"></div>
+      <div id="name"></div>
+      <div class="seen"></div>
+
+    </div>
+    <div class="messages" id="chat">
+    </div>
+    <div id="typing" class="" style="display: none">e</div>
+
+
+    <div id="previewUploadFile" style="background-color: antiquewhite; display: none; padding: 1vh">
+    </div>
+    <div class="input">
+
+      <label for="file">
+        <i class="fas fa-camera" id="camera"></i>
+      </label>
+
+      <label for="file">
+        <i class="fa-solid fa-paperclip"></i>
+      </label>
+
+
+      <input type="file" multiple style="display: none;" name="file" id="file">
+
+      <form action="" id="form" style="flex-basis: 100%;">
+        <input placeholder="Type your message here!" type="text" id="inputText" autocomplete="off" />
+      </form>
+      <i class="fa-solid fa-paper-plane" id="submit-message"></i>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="addContactOne" tabindex="-1">
+  <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="allUserForOne">
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="addContactGroup" tabindex="-1">
+  <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="allUserForMany">
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="btn-create-group">Create</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="./js/chat.js"></script>
+
+<script>
+  const form = document.getElementById('form');
+  const input = document.getElementById('inputText');
+  const messages = document.getElementById('chat');
+  let conversationId = ''
+  const token = localStorage.getItem('token');
+
+  if(!token) {
+    window.location.href = '/login'
+  }
+
+  const socket = io( window.location.host, {
+    auth: {
+      token: token
+    }
+  });
+
+  // SEND MESSAGE
+  form.addEventListener('submit', (e) => { sendMessage(e) });
+
+  // RECEIVE MESSAGE
+  socket.on('message', (msg, socketID, img, conversationID) => { receiveMessage(msg, socketID, img, conversationID) });
+
+  socket.on('response-create-conversation', (data) => { responseCreateConversation(data) })
+
+  // Notification On-Off
+  socket.on("notifi-online", (token) => { notifiOnline(token) })
+  socket.on("notifi-offline", (token) => { notifiOffline(token) })
+
+  $(document).ready(() => { getAllUserAndRenderInSideBar() });
+
+  $('#btn-create-group').click(() => { createConversationMany() })
+
+  $(document).ready(() => { getAllConversationOfUser() })
+
+  $('#btn-logout').click(() => { logout(token) })
+
+  $('#file').change(() => { previewUploadFile() })
+
+  $('#inputText').on('change keydown paste input', () => { typeMessage( conversationId, token)});
+
+  socket.on('response-typing', (data) => { responseTyping(data) })
+
+</script>
