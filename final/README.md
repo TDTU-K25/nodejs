@@ -1,9 +1,5 @@
 # ĐỒ ÁN CUỐI KÌ - PHÁT TRIỂN ỨNG DỤNG WEB VỚI NODEJS
 
-## Link Video demo:
--   Youtube: https://youtu.be/9d54NP0HosY
--   Drive: https://drive.google.com/drive/folders/1MIEVA99oPlTM4VY4DCLPR0xWjRNHwKRd?usp=sharing
-
 ## Công nghệ sử dụng
 
 -   HTML - CSS - JavaScript
