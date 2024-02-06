@@ -1,0 +1,162 @@
+<div class="container">
+    <h2>Giỏ hàng</h2>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <td colspan="7">
+                    <a href="" class="btn btn-primary">Tiếp tục mua hàng</a>
+                </td>
+            </tr>
+            <tr>
+                <th>Ảnh</th>
+                <th>STT</th>
+                <th>Tên sản phẩm</th>
+                <th>Số lượng</th>
+                <th>Giá</th>
+                <th>Thành tiền</th>
+                <th>Xóa</th>
+            </tr>
+        </thead>
+        <tbody id="cart">
+
+
+
+            <tr>
+                <td colspan="7" style="text-align: right">
+                    <button id="btn-export-pdf" class="btn btn-primary">Export PDF</button>
+                    <button id="btn-update-cart" type="button" class="btn btn-success">Cập nhật giỏ hàng</button>
+                    <button id="btn-order" type="button" class="btn btn-danger">Thanh toán</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
+    integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    let token = localStorage.getItem("token")
+    if (!token) {
+        window.location.href = "/account/login"
+    }
+
+    $(document).ready(function () {
+        generateHTMLOfCart()
+
+
+    })
+
+    $("#btn-export-pdf").click(evt => {
+        evt.preventDefault()
+        const opt = {
+            filename: 'cart.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+        };
+        const element = document.getElementById("cart")
+        html2pdf().set(opt).from(element).save()
+    })
+
+    $("#btn-order").click(evt => {
+        evt.preventDefault()
+        const cart = JSON.parse(localStorage.getItem("cart")) || []
+        const totalPrice = cart.reduce((total, item) => total + item.price, 0)
+        const order = {
+            totalPrice,
+            products: cart.map(item => ({
+                productId: item.productId,
+                quantity: item.quantity,
+                price: item.price
+            }))
+        }
+        $.ajax({
+            url: "/orders",
+            method: "POST",
+            data: JSON.stringify(order),
+            contentType: "application/json",
+            headers: {
+                "Authorization": `Bearer ${token}`
+            },
+            success: data => {
+                localStorage.removeItem("cart")
+                window.location.href = "/"
+            },
+            error: err => {
+                console.log(err)
+            }
+        })
+    })
+
+    const updateQuantity = (input) => {
+        const tr = $(input).closest("tr")
+        const productId = tr.data("product-id")
+        const cart = JSON.parse(localStorage.getItem("cart")) || []
+        const productFound = cart.find(item => item.productId === productId)
+        const priceOfProduct = productFound.price / productFound.quantity
+        productFound.quantity = input.value
+        if (productFound.quantity < 1) {
+            const index = cart.indexOf(productFound)
+            cart.splice(index, 1)
+            localStorage.setItem("cart", JSON.stringify(cart))
+            tr.remove()
+        } else {
+            productFound.price = productFound.quantity * priceOfProduct
+            localStorage.setItem("cart", JSON.stringify(cart))
+            tr.find("td").eq(5).find("span").text(productFound.price)
+        }
+
+    }
+
+    const deleteFromCart = (event, a) => {
+        event.preventDefault()
+        const tr = $(a).closest("tr")
+        const productId = tr.data("product-id")
+        const cart = JSON.parse(localStorage.getItem("cart")) || []
+        const productFound = cart.find(item => item.productId === productId)
+        const index = cart.indexOf(productFound)
+        cart.splice(index, 1)
+        localStorage.setItem("cart", JSON.stringify(cart))
+        tr.remove()
+    }
+
+
+    function generateHTMLOfCart() {
+        const cart = JSON.parse(localStorage.getItem("cart")) || []
+        let generateHtml = cart.map(async (cartProduct) => {
+            const resp = await fetch(`/products/${cartProduct.productId}`)
+            const json = await resp.json()
+            const product = json.data
+            const { _id, name, image, price } = product
+
+            return `<tr data-product-id="${_id}">
+                <td><img src="${image}" style="max-height: 50px"></td>
+                <td>
+                    ${_id}
+                </td>
+                <td>
+                    ${name}
+                </td>
+                <td>
+                    <input onChange="updateQuantity(this)" class="quantityInput" type="number" value="${cartProduct.quantity}">
+                </td>
+                <td>
+                    <span class="price">
+                      ${price}
+                    </span>đ
+                </td>
+                <td>
+                    <span>
+                       ${cartProduct.price}
+                    </span>
+                </td>
+                <td><a onClick="deleteFromCart(event, this)" href="" class="btn btn-danger">Xóa</a></td>
+            </tr>`
+        })
+        // wait for all promises in generateHtml to be resolved then continue
+        Promise.all(generateHtml).then((html) => {
+            const result = html.join('')
+            $('#cart').prepend(result)
+        })
+    }
+</script>

@@ -1,0 +1,85 @@
+<div class="container my-3">
+  <h4 class="my-5 text-primary text-center text-uppercase">Danh sách người dùng</h4>
+  <a class="btn btn-success btn-sm my-4" href="/users/add">Thêm người dùng</a>
+  <p>Chọn một người dùng để xem chi tiết</p>
+  {{#if flash}}
+  <div class="alert alert-{{flash.type}} alert-dismissible fade show" role="alert">
+    {{flash.message}}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  {{/if}}
+  <table class="table table-striped border">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Gender</th>
+        <th>Status</th>
+        <th rowspan="2" class="text-center">Thao tác</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each users}}
+      <tr>
+        <td>{{this.id}}</td>
+        <td><a href="/users/{{this.id}}">{{this.name}}</a></td>
+        <td>{{this.email}}</td>
+        <td>{{this.gender}}</td>
+        <td>{{this.status}}</td>
+        <td class="text-center">
+          <a class="btn btn-sm btn-outline-primary" href="/users/{{this.id}}/edit">Chỉnh sửa</a>
+          <a href="" onclick="showDeleteModal(this)" class="btn btn-sm btn-outline-danger" data-user-id="{{this.id}}"
+            data-user-name="{{this.name}}" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Xóa</a>
+        </td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+  <p>Tổng số người dùng: <strong class="text-danger">{{users.length}}</strong></p>
+
+  <!-- Confirm delete Modal -->
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="staticBackdropLabel">Xóa người dùng</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Bạn có chắc muốn xóa user
+        </div>
+        <div class="modal-footer">
+          <button id="btn-confirm" type="button" class="btn btn-danger">Xóa</button>
+          <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Đóng</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Confirm delete Modal -->
+</div>
+
+<script>
+  const buttonConfirm = document.getElementById("btn-confirm");
+  const showDeleteModal = (btn) => {
+    const modal = document.getElementById("staticBackdrop")
+    document.getElementsByClassName("modal-body")[0].innerHTML = `Bạn có chắc rằng muốn xóa <b>${btn.dataset.userName}</b>?`;
+    buttonConfirm.setAttribute("data-user-id", btn.dataset.userId);
+  }
+  buttonConfirm.addEventListener("click", (evt) => {
+    fetch("http://localhost:8000/users/delete?_method=DELETE", {
+      method: "post",
+      body: JSON.stringify({
+        id: evt.target.dataset.userId
+      }), headers: {
+        "Content-type": "application/json"
+      }
+    }).then(res => res.json())
+      .then(json => {
+        if (json.status === "success") {
+          location.reload()
+        }
+      })
+  })
+</script>

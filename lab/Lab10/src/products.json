@@ -1,0 +1,110 @@
+[
+  {
+    "name": "iPhone 7",
+    "price": 10990000,
+    "description": "",
+    "image": "images/iphone-7-plus-128gb-de-400x460.png",
+    "category": {
+      "$oid": "6560772ca06f42b28e94e7d3"
+    }
+  },
+  {
+    "name": "Samsung Galaxy J3",
+    "price": 8490000,
+    "description": "",
+    "image": "images/samsung-galaxy-j3-2017-2-400x460-1.png",
+    "category": {
+      "$oid": "65607746a06f42b28e94e7d4"
+    }
+  },
+  {
+    "name": "Samsung Galaxy J5",
+    "price": 5490000,
+    "description": "",
+    "image": "images/samsung-galaxy-j3-2017-2-400x460.png",
+    "category": {
+      "$oid": "65607746a06f42b28e94e7d4"
+    }
+  },
+  {
+    "name": "Samsung Galaxy J7",
+    "price": 3490000,
+    "description": "",
+    "image": "images/samsung-galaxy-j7-plus-1-400x460.png",
+    "category": {
+      "$oid": "65607746a06f42b28e94e7d4"
+    }
+  },
+  {
+    "name": "Samsung Galaxy Note 5",
+    "price": 6990000,
+    "description": "",
+    "image": "images/samsung-galaxy-note-5-2-400x460.png",
+    "category": {
+      "$oid": "65607746a06f42b28e94e7d4"
+    }
+  },
+  {
+    "name": "iPhone 6S",
+    "price": 8500000,
+    "description": "",
+    "image": "images/iphone-6s-128gb-hong-1-400x450.png",
+    "category": {
+      "$oid": "6560772ca06f42b28e94e7d3"
+    }
+  },
+  {
+    "name": "Oppo F3 Plus",
+    "price": 2500000,
+    "description": "",
+    "image": "images/oppo-f3-plus-1-1-400x460.png",
+    "category": {
+      "$oid": "65607750a06f42b28e94e7d5"
+    }
+  },
+  {
+    "name": "Oppo A7",
+    "price": 12500000,
+    "description": "",
+    "image": "images/oppo-a71-400x460.png",
+    "category": {
+      "$oid": "65607750a06f42b28e94e7d5"
+    }
+  },
+  {
+    "name": "Google Redmi 4X",
+    "price": 10500000,
+    "description": "",
+    "image": "images/xiaomi-redmi-4x-400-400x460.png",
+    "category": {
+      "$oid": "65607758a06f42b28e94e7d6"
+    }
+  },
+  {
+    "name": "Google Mi A1",
+    "price": 7500000,
+    "description": "",
+    "image": "images/xiaomi-mi-a12-400x460.png",
+    "category": {
+      "$oid": "65607758a06f42b28e94e7d6"
+    }
+  },
+  {
+    "name": "Nokia 8",
+    "price": 6300000,
+    "description": "",
+    "image": "images/nokia-8-1-400x460.png",
+    "category": {
+      "$oid": "65607762a06f42b28e94e7d7"
+    }
+  },
+  {
+    "name": "Nokia 3",
+    "price": 4300000,
+    "description": "",
+    "image": "images/nokia-3-2-400x460.png",
+    "category": {
+      "$oid": "65607762a06f42b28e94e7d7"
+    }
+  }
+]

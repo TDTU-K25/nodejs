@@ -1,0 +1,8 @@
+<h1 class="my-4">Shop Name</h1>
+<div class="list-group">
+  {{#each categories}}
+    <a href="/shop?category={{this.name}}" class="list-group-item">
+      {{this.name}}
+    </a>
+  {{/each}}
+</div>

@@ -1,0 +1,24 @@
+{
+  "name": "Lab06_07",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "main": "app.js",
+  "license": "MIT",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "cookie-parser": "^1.4.6",
+    "csurf": "^1.11.0",
+    "express": "^4.18.2",
+    "express-handlebars": "^7.1.2",
+    "express-session": "^1.17.3",
+    "formidable": "^3.5.1",
+    "mime-types": "^2.1.35",
+    "promise-mysql": "^5.2.0",
+    "zip-local": "^0.3.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}

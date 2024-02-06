@@ -1,0 +1,37 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+	<div class="container">
+		<a class="navbar-brand" href="">Start Bootstrap</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarResponsive">
+			<ul class="navbar-nav ml-auto">
+				<li class="nav-item active">
+					<a class="nav-link" href="#">Home
+						<span class="sr-only">(current)</span>
+					</a>
+				</li>
+				    {{!-- If not login yet --}}
+					<li class="nav-item">
+						<a id="btn-login" class="nav-link" href="/account/login">Login</a>
+					</li>
+
+					<li class="nav-item">
+						<a id="btn-cart" class="nav-link" href="/cart">Cart</a>
+					</li>
+				
+			</ul>
+		</div>
+	</div>
+</nav>
+
+<script>
+	if (localStorage.getItem("cart") != null) {
+		$("#btn-cart").html(`Cart (${JSON.parse(localStorage.getItem("cart")).length} items)`)
+	} 
+
+	if (localStorage.getItem("token") != null) {
+		$("#btn-login").html("Username");
+		$("#btn-login").attr("href", "#");
+	}
+</script>
