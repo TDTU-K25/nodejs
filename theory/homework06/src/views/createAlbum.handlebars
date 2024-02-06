@@ -1,0 +1,49 @@
+<div class="container mt-5">
+  <a href="/albums">Back</a>
+  <form action="/upload" enctype="multipart/form-data" method="post">
+    <div class="mb-3">
+        <label for="" class="form-label">Album name</label>
+        <input id="inputAlbumName" type="text" class="form-control" name="albumName">
+    </div>
+
+
+    <input type="file" name="photos" multiple id="files-upload" class="form-control" data-url="/upload"/>
+    <div class="progress mt-3">
+      <div
+        id="progress-bar"
+        class="progress-bar progress-bar-striped bg-success"
+        role="progressbar"
+        aria-valuenow="40"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        style="width:0%"
+      >
+      </div>
+    </div>
+  </form>
+  <button id="uploadBtn">Upload</button>
+</div>
+<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js" integrity="sha256-eTyxS0rkjpLEo16uXTS0uVCS4815lc40K2iVpWDvdSY=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery.iframe-transport@1.0.0/jquery.iframe-transport.min.js"></script>
+<script src="/modules/blueimp-file-upload/js/jquery.fileupload.js"></script>
+<script>
+  $(function () {
+    // upload each file in each request
+    $('#files-upload').fileupload({
+     
+      dataType: 'json',
+      progress: function (e, data) {
+        let progress = parseInt(data.loaded / data.total * 100, 10);
+        let progressBar = document.getElementById("progress-bar")
+        progressBar.style.width = progress + "%"
+        progressBar.innerHTML = `${progress}% Complete`
+      },
+      done: (e, data) => {
+        
+      },
+      fail: (e, data) => {
+        
+      }
+  });
+});
+</script>

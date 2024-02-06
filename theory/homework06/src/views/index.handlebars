@@ -1,0 +1,14 @@
+<div class="container mt-3">
+  <h1 class="mb-3">Your albums</h1>
+  <a class="btn btn-success" href="/albums/create">Create new album</a>
+  <div class="row mt-4">
+    {{#each albums}}
+      <div class="col-3">
+        <div>
+          <a href="/albums/detail/{{this._id}}">{{this.name}}</a>
+        </div>
+      </div>
+    {{/each}}
+  </div>
+
+</div>

@@ -1,0 +1,3 @@
+Bug ở chức năng upload ảnh do gom chung tạo album và upload ảnh với nhau
+
+=> Nên tiếp cận theo hướng tạo album trước sau đó có một URL (/albums/:id) dẫn đến album đó rồi upload ảnh lên album dựa vào id của album đó để lưu vào database
